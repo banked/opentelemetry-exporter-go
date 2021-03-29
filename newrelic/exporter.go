@@ -11,22 +11,21 @@ import (
 	"os"
 	"strings"
 
+	"github.com/banked/opentelemetry-exporter-go/newrelic/transform"
+	"github.com/newrelic/newrelic-telemetry-sdk-go/telemetry"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/metric/global"
+	exportmetric "go.opentelemetry.io/otel/sdk/export/metric"
 	"go.opentelemetry.io/otel/sdk/export/metric/aggregation"
+	exporttrace "go.opentelemetry.io/otel/sdk/export/trace"
 	controller "go.opentelemetry.io/otel/sdk/metric/controller/basic"
 	processor "go.opentelemetry.io/otel/sdk/metric/processor/basic"
 	"go.opentelemetry.io/otel/sdk/metric/selector/simple"
 	"go.opentelemetry.io/otel/sdk/resource"
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.opentelemetry.io/otel/semconv"
 	"go.opentelemetry.io/otel/trace"
-
-	"github.com/akulnurislam/opentelemetry-exporter-go/newrelic/internal/transform"
-	"github.com/newrelic/newrelic-telemetry-sdk-go/telemetry"
-	exportmetric "go.opentelemetry.io/otel/sdk/export/metric"
-	exporttrace "go.opentelemetry.io/otel/sdk/export/trace"
-	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
 
 const (
@@ -41,9 +40,7 @@ type Exporter struct {
 	serviceName string
 }
 
-var (
-	errServiceNameEmpty = errors.New("service name is required")
-)
+var errServiceNameEmpty = errors.New("service name is required")
 
 // NewExporter creates a new Exporter that exports telemetry to New Relic.
 func NewExporter(service, apiKey string, options ...func(*telemetry.Config)) (*Exporter, error) {

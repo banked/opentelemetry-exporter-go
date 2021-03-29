@@ -1,4 +1,4 @@
-module github.com/akulnurislam/opentelemetry-exporter-go/examples/simple
+module github.com/banked/opentelemetry-exporter-go/examples/simple
 
 go 1.15
 
