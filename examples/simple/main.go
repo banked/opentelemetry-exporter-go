@@ -13,7 +13,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/akulnurislam/opentelemetry-exporter-go/newrelic"
+	"github.com/banked/opentelemetry-exporter-go/newrelic"
 	"github.com/newrelic/newrelic-telemetry-sdk-go/telemetry"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -29,7 +29,6 @@ import (
 )
 
 func main() {
-
 	// Create a New Relic OpenTelemetry Exporter
 	apiKey, ok := os.LookupEnv("NEW_RELIC_API_KEY")
 	if !ok {
@@ -137,5 +136,4 @@ func main() {
 			boundRecorder.Record(ctx, 1.3)
 		}(ctx)
 	}(ctx)
-
 }

@@ -9,7 +9,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/akulnurislam/opentelemetry-exporter-go/newrelic"
+	"github.com/banked/opentelemetry-exporter-go/newrelic"
 	"github.com/newrelic/newrelic-telemetry-sdk-go/telemetry"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -49,15 +49,11 @@ func ExampleNewExportPipeline() {
 	traceProvider, controller, err := newrelic.NewExportPipeline(
 		"My Service",
 		[]trace.TracerProviderOption{
-			trace.WithConfig(trace.Config{
-				// Conservative sampler.
-				DefaultSampler: trace.ParentBased(trace.NeverSample()),
-				// Reduce span events.
-				SpanLimits: trace.SpanLimits{
-					EventCountLimit: 10,
-				},
-				Resource: r,
+			trace.WithSampler(trace.ParentBased(trace.NeverSample())),
+			trace.WithSpanLimits(trace.SpanLimits{
+				EventCountLimit: 10,
 			}),
+			trace.WithResource(r),
 		},
 		[]controller.Option{
 			// Increase push frequency.
